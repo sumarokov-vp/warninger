@@ -1,16 +1,8 @@
 import pytest
 
-from sqlalchemy import create_engine
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-
-import configparser
-
-config = configparser.ConfigParser()
-config.read('alembic.ini')
-
-url = config['alembic']['sqlalchemy.url']
-engine = create_engine(url)
+from db_engine import engine
 
 def test_db_connection():
     with Session(engine) as session:

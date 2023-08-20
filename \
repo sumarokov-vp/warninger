@@ -1,0 +1,34 @@
+from db_engine import engine
+from datetime import datetime, timedelta
+
+from sqlalchemy.orm import Session
+
+from models import Warning
+
+def process_warning(warning) -> Warning:
+
+    # Get datetime of start notify based on last_success
+    notification_timeout: datetime = warning.last_success + timedelta(
+        days=warning.wait_days,
+        hours=warning.wait_hours,
+        minutes=warning.wait_minutes,
+        seconds=warning.wait_seconds,
+    )
+
+    # Get datetime of next notification based on last_notification
+    next_notification: datetime = warning.last_notification + timedelta(
+        days= warning.repeat_days,
+        hours= warning.repeat_hours,
+        minutes= warning.repeat_minutes,
+        seconds= warning.repeat_seconds,
+    )
+
+
+    # Notify if next notification is in the past
+    # and update last_success
+    if next_notification < datetime.now() and notification_timeout < datetime.now():
+        notify(warning)
+        warning.last_notification = datetime.now()
+
+    return warning
+
