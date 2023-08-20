@@ -2,8 +2,9 @@ from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import relationship
 # from sqlalchemy.orm import Mapped
 # from sqlalchemy.orm import mapped_column
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import BooleanClauseList, Column, Integer, String
 from sqlalchemy import DateTime
+from sqlalchemy import Boolean
 from sqlalchemy import ForeignKey
 from sqlalchemy import UniqueConstraint
 
@@ -39,6 +40,7 @@ class Warning(Base):
     repeat_minutes = Column(Integer, server_default='0')
     repeat_seconds = Column(Integer, server_default='0')
     recipients = relationship("Recipient", back_populates="warning")
+    enabled = Column(Boolean, server_default='1')
 
 class Recipient(Base):
     __tablename__ = 'recipients'

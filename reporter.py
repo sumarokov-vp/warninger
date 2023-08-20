@@ -63,6 +63,8 @@ if __name__ == "__main__":
         with Session(engine, expire_on_commit= False) as session:
             warnings = session.scalars(
                 select(Warning)
+                .where(Warning.enabled == True) # type: ignore
+                .where(Warning.last_success != None) # type: ignore
             )
             for warning in warnings:
                 process_warning(warning= warning, session= session)
