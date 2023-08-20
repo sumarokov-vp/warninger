@@ -53,3 +53,6 @@ class Setting(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     value = Column(String)
+    __table_args__ = (
+        UniqueConstraint('name', name='name_unique'),
+    )

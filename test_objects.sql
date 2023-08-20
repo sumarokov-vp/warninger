@@ -36,5 +36,15 @@ BEGIN
     (name, chat_id, warning_id)
     VALUES ('Vova', 65310, created_warning_id);
   END IF;
+
+  INSERT INTO settings
+  (name, value)
+  VALUES
+  ('listen_port', '5052'),
+  ('bot_token', '640519344:AAEdRL3ToVuvCXJr4yumA4GzCrYek7ewuVU'),
+  ('reporter_sleep_time_sec', '100')
+  ON CONFLICT ("name") DO UPDATE SET
+  name = EXCLUDED.name;
+
 END;
 $function$;

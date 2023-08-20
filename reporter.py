@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 from models import Warning
 from models import Recipient
 from bot import bot
+from settings import get_setting
 
 def process_warning(warning: Warning, session: Session) -> int:
 
@@ -65,4 +66,5 @@ if __name__ == "__main__":
             )
             for warning in warnings:
                 process_warning(warning= warning, session= session)
-        sleep(100)
+        sleep_time = int(get_setting('reporter_sleep_time'))
+        sleep(sleep_time)
