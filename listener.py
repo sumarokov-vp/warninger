@@ -2,12 +2,16 @@ from datetime import datetime
 
 from flask import Flask, request
 from flask import jsonify, make_response
+
 from sqlalchemy.orm import Session
 from sqlalchemy import select, update
+from db_engine import engine
+
 from werkzeug.wrappers import response
 
-from db_engine import engine
+
 from models import Warning
+from settings import get_setting
 
 app = Flask(__name__)
 
@@ -37,5 +41,4 @@ def everythingisok():
             return response
 
 if __name__ == '__main__':
-    app.run(debug = False, port = 5050, host='0.0.0.0')
-
+    app.run(debug = False, port = int(get_setting('listen_port')), host='0.0.0.0')

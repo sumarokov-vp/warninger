@@ -47,3 +47,9 @@ class Recipient(Base):
     chat_id = Column(Integer)
     warning_id = Column(Integer, ForeignKey('warnings.id'))
     warning = relationship("Warning", back_populates="recipients")
+
+class Setting(Base):
+    __tablename__ = 'settings'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    value = Column(String)

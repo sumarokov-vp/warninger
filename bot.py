@@ -1,3 +1,4 @@
 from telebot import TeleBot
+from settings import get_setting
 
-bot = TeleBot('640519344:AAEdRL3ToVuvCXJr4yumA4GzCrYek7ewuVU')
+bot = TeleBot(get_setting('bot_token'))
