@@ -66,5 +66,5 @@ if __name__ == "__main__":
             )
             for warning in warnings:
                 process_warning(warning= warning, session= session)
-        sleep_time = int(get_setting('reporter_sleep_time'))
+        sleep_time = int(get_setting('reporter_sleep_time_sec'))
         sleep(sleep_time)
