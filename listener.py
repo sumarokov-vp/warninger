@@ -48,6 +48,14 @@ def everythingisok_wrong_method():
     response = make_response(jsonify(message), 405)
     return response
 
+# any other request must return 404 and print request data
+@app.route('/', defaults={'path': ''}, methods=['GET', 'POST', 'PUT', 'DELETE']) # type: ignore
+def catch_all(path):
+    message = {'message': f'Not found!'}
+    response = make_response(jsonify(message), 404)
+    print(request)
+    return response
+
 
 if __name__ == '__main__':
     app.run(debug = False, port = int(get_setting('listen_port')), host='0.0.0.0')
