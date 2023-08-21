@@ -38,7 +38,7 @@ def everythingisok():
         message = {'message': f'Content-Type not supported!'}
         response = make_response(jsonify(message), 415)
 
-    print(response)
+    print(response.json)
     return response
 
 @app.route('/everythingisok', methods=['GET', 'PUT']) # type: ignore
