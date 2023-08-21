@@ -21,6 +21,8 @@ def everythingisok():
     if (content_type == 'application/json'):
         json = request.get_json()
     else:
+        message = {'message': f'Content-Type not supported!'}
+        response = make_response(jsonify(message), 415)
         return 'Content-Type not supported!'
     print (json)
     with Session(engine) as session:
@@ -39,6 +41,13 @@ def everythingisok():
             message = {'message': f'Warning_id {warning_id} is not found!'}
             response = make_response(jsonify(message), 404)
             return response
+
+@app.route('/everythingisok', methods=['GET', 'PUT']) # type: ignore
+def everythingisok_wrong_method():
+    message = {'message': f'Wrong method!'}
+    response = make_response(jsonify(message), 405)
+    return response
+
 
 if __name__ == '__main__':
     app.run(debug = False, port = int(get_setting('listen_port')), host='0.0.0.0')
