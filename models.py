@@ -41,6 +41,8 @@ class Warning(Base):
     repeat_seconds = Column(Integer, server_default='0')
     recipients = relationship("Recipient", back_populates="warning")
     enabled = Column(Boolean, server_default='1')
+    name = Column(String)
+    description = Column(String)
 
 class Recipient(Base):
     __tablename__ = 'recipients'
