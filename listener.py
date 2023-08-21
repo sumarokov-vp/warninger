@@ -23,7 +23,7 @@ def everythingisok():
     else:
         message = {'message': f'Content-Type not supported!'}
         response = make_response(jsonify(message), 415)
-        return 'Content-Type not supported!'
+        return response
     print (json)
     with Session(engine) as session:
         warning = session.scalar(
