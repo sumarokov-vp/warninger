@@ -27,14 +27,15 @@ def everythingisok():
                 session.commit()
                 message = {'message': f'Warning_id {warning.id} is OK'}
                 response = make_response(jsonify(message), 200)
-                message = f"""
+                if warning.status.name == 'Active warning':
+                    message = f"""
 {warning.success_message}
 _____________________
 <code>
 Warning name: {warning.name}
 </code>
 """
-                warning.all_recipients_mailing(session, message)
+                    warning.all_recipients_mailing(session, message)
             else:
                 warning_id = json['warning_id']
                 message = {'message': f'Warning_id {warning_id} is not found!'}

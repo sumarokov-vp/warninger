@@ -46,5 +46,15 @@ BEGIN
   ON CONFLICT ("name") DO UPDATE SET
   name = EXCLUDED.name;
 
+  INSERT INTO warning_status
+  (name, success)
+  VALUES
+  ('Active success', true),
+  ('Active warning', false),
+  ('Deactivated', false)
+  ON CONFLICT ("name") DO UPDATE SET
+  name = EXCLUDED.name,
+  success = EXCLUDED.success;
+
 END;
 $function$;

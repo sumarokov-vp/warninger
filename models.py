@@ -30,6 +30,8 @@ class Warning(Base):
     id = Column(Integer, primary_key=True)
     message = Column(String)
     user_id = Column(Integer, ForeignKey('users.id'))
+    status_id = Column(Integer, ForeignKey('warning_status.id'))
+    status = relationship("WarningStatus", back_populates="warnings")
     user = relationship("User", back_populates="warnings")
     # last date time of successful notification
     last_success = Column(DateTime, nullable=True)
@@ -47,6 +49,7 @@ class Warning(Base):
     name = Column(String)
     description = Column(String)
     success_message = Column(String)
+
 
     def all_recipients_mailing(self, session: Session, message: str):
         recipients = session.scalars(
@@ -73,6 +76,17 @@ class Setting(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     value = Column(String)
+    __table_args__ = (
+        UniqueConstraint('name', name='name_unique'),
+    )
+
+class WarningStatus(Base):
+    __tablename__ = 'warning_status'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    success = Column(Boolean, server_default='0')
+    warnings = relationship("Warning", back_populates="status")
+
     __table_args__ = (
         UniqueConstraint('name', name='name_unique'),
     )
