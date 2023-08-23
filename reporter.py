@@ -1,3 +1,4 @@
+from logging import warn
 from time import sleep
 from sqlalchemy import select
 from datetime import datetime, timedelta
@@ -38,7 +39,18 @@ def process_warning(warning: Warning, session: Session) -> int:
     # Notify if next notification is in the past
     # and update last_success
     if next_notification < datetime.now() and notification_timeout < datetime.now():
-        notify(warning= warning, session= session)
+        message = f"""
+{warning.message}
+_____________________
+<code>
+Warning name: {warning.name}
+Last success signal: {warning.last_success}
+</code>
+"""
+        warning.all_recipients_mailing(
+            session= session,
+            message= message,
+        )
         warning.last_notification = datetime.now() # type: ignore
         session.commit()
         return 0
@@ -48,14 +60,6 @@ def process_warning(warning: Warning, session: Session) -> int:
         print(f"next_notification: {next_notification}")
         print("Not time yet")
         return 1
-
-def notify(warning: Warning, session: Session):
-    recipients = session.scalars(
-        select(Recipient)
-        .where(Recipient.warning_id == warning.id)
-    )
-    for recipient in recipients:
-        bot.send_message(recipient.chat_id, warning.message) # type: ignore
 
 if __name__ == "__main__":
     while True:

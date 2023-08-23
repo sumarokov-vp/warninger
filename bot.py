@@ -1,4 +1,5 @@
 from telebot import TeleBot
-from settings import get_setting
+from os import environ
 
-bot = TeleBot(get_setting('bot_token'))
+bot_token = str(environ.get('BOT_TOKEN'))
+bot = TeleBot(bot_token)

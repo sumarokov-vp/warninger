@@ -7,6 +7,9 @@ from sqlalchemy import DateTime
 from sqlalchemy import Boolean
 from sqlalchemy import ForeignKey
 from sqlalchemy import UniqueConstraint
+from sqlalchemy import select, update
+from sqlalchemy.orm import Session
+from bot import bot
 
 class Base(DeclarativeBase):
     pass
@@ -43,6 +46,19 @@ class Warning(Base):
     enabled = Column(Boolean, server_default='1')
     name = Column(String)
     description = Column(String)
+    success_message = Column(String)
+
+    def all_recipients_mailing(self, session: Session, message: str):
+        recipients = session.scalars(
+            select(Recipient)
+            .where(Recipient.warning_id == self.id)
+        )
+        for recipient in recipients:
+            bot.send_message(
+                chat_id= int(recipient.chat_id), # type: ignore
+                text= message,
+                parse_mode= "HTML",
+            ) # type: ignore
 
 class Recipient(Base):
     __tablename__ = 'recipients'
