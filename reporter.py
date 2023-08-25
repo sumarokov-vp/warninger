@@ -14,7 +14,7 @@ from settings import get_setting
 def process_warning(warning: Warning, session: Session) -> int:
 
     # Get datetime of start notify based on last_success
-    print(f"Warning name: {warning.name}")
+    print(f"\nWarning name: {warning.name}")
     print(f"Last success: {warning.last_success}")
 
     if not warning.last_success: # type: ignore
@@ -25,7 +25,7 @@ def process_warning(warning: Warning, session: Session) -> int:
         minutes=warning.wait_minutes, # type: ignore
         seconds=warning.wait_seconds, # type: ignore
     )
-    print(f"Waiting for: {notification_timeout}\n")
+    print(f"Notification start time: {notification_timeout}")
 
 
     # Get datetime of next notification based on last_notification
@@ -59,10 +59,9 @@ Last success signal: {warning.last_success}
         session.commit()
         return 0
     else:
+        print(f"Last notification: {warning.last_notification}")
         print(f"Now datetime: {datetime.now()}")
-        print(f"notification_timeout: {notification_timeout}")
-        print(f"next_notification: {next_notification}")
-        print("Not time yet")
+        print(f"Next_notification: {next_notification}")
         return 1
 
 if __name__ == "__main__":
