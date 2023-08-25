@@ -14,8 +14,10 @@ from settings import get_setting
 def process_warning(warning: Warning, session: Session) -> int:
 
     # Get datetime of start notify based on last_success
+    print(f"Warning name: {warning.name}")
+    print(f"Last success: {warning.last_success}")
+
     if not warning.last_success: # type: ignore
-        print("No last_success")
         return -1
     notification_timeout: datetime = warning.last_success + timedelta( # type: ignore
         days=warning.wait_days, # type: ignore
@@ -23,11 +25,12 @@ def process_warning(warning: Warning, session: Session) -> int:
         minutes=warning.wait_minutes, # type: ignore
         seconds=warning.wait_seconds, # type: ignore
     )
+    print(f"Waiting for: {notification_timeout}\n")
+
 
     # Get datetime of next notification based on last_notification
     next_notification: datetime
     if not warning.last_notification: # type: ignore
-        print("First notification")
         next_notification = warning.last_success # type: ignore
     else:
         next_notification = warning.last_notification + timedelta( # type: ignore

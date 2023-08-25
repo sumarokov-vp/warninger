@@ -7,7 +7,7 @@ if not bot_token:
 if bot_token =='':
     raise Exception("BOT_TOKEN env variable is empty")
 if bot_token == 'None':
-    raise Exception("BOT_TOKEN env variable is None")
+    raise Exception("BOT_TOKEN env variable is None\nUse export BOT_TOKEN=\"your_token\"")
 
 print(f"Bot token: {bot_token}")
 bot = TeleBot(bot_token)
