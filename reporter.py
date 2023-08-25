@@ -42,27 +42,31 @@ def process_warning(warning: Warning, session: Session) -> int:
 
     # Notify if next notification is in the past
     # and update last_success
-    if next_notification < datetime.now() and notification_timeout < datetime.now():
-        message = f"""
-{warning.message}
-_____________________
-<code>
-Warning name: {warning.name}
-Last success signal: {warning.last_success}
-</code>
-"""
-        warning.all_recipients_mailing(
-            session= session,
-            message= message,
-        )
-        warning.last_notification = datetime.now() # type: ignore
-        session.commit()
-        return 0
+    if notification_timeout < datetime.now():
+        if next_notification < datetime.now():
+            message = f"""
+    {warning.message}
+    _____________________
+    <code>
+    Warning name: {warning.name}
+    Last success signal: {warning.last_success}
+    </code>
+    """
+            warning.all_recipients_mailing(
+                session= session,
+                message= message,
+            )
+            warning.last_notification = datetime.now() # type: ignore
+            session.commit()
+            return 0
+        else:
+            print(f"Last notification: {warning.last_notification}")
+            print(f"Now datetime: {datetime.now()}")
+            print(f"Next_notification: {next_notification}")
+            return 1
     else:
-        print(f"Last notification: {warning.last_notification}")
-        print(f"Now datetime: {datetime.now()}")
-        print(f"Next_notification: {next_notification}")
-        return 1
+        print(f"Not time for notification yet")
+        return 2
 
 if __name__ == "__main__":
     while True:
