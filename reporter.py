@@ -75,7 +75,7 @@ if __name__ == "__main__":
                 try:
                     process_warning(warning= warning, session= session)
                 except apihelper.ApiTelegramException as e:
-                    warn(f"Telegram API error: {e}")
+                    print(f"Telegram API error: {e}")
                     session.rollback()
                     continue
         sleep_time = int(get_setting('reporter_sleep_time_sec'))
