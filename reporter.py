@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 from models import Warning
 from models import Recipient
 from bot import bot
+from telebot import apihelper
 from settings import get_setting
 
 def process_warning(warning: Warning, session: Session) -> int:
@@ -71,6 +72,11 @@ if __name__ == "__main__":
                 .where(Warning.last_success != None) # type: ignore
             )
             for warning in warnings:
-                process_warning(warning= warning, session= session)
+                try:
+                    process_warning(warning= warning, session= session)
+                except apihelper.ApiTelegramException as e:
+                    warn(f"Telegram API error: {e}")
+                    session.rollback()
+                    continue
         sleep_time = int(get_setting('reporter_sleep_time_sec'))
         sleep(sleep_time)
