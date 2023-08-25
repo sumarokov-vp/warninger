@@ -6,4 +6,5 @@ if not bot_token:
     raise Exception("BOT_TOKEN env variable is not set")
 if bot_token =='':
     raise Exception("BOT_TOKEN env variable is empty")
+print(f"Bot token: {bot_token}")
 bot = TeleBot(bot_token)
