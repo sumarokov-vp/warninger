@@ -68,6 +68,8 @@ Last success signal: {warning.last_success}
             print(f"Next_notification: {next_notification}")
             return 1
     else:
+        warning.last_notification = None
+        session.commit()
         print(f"Not time for notification yet")
         return 2
 
