@@ -59,6 +59,7 @@ def process_warning(warning: Warning, session: Session) -> int:
                 message= message,
             )
             warning.last_notification = datetime.now() # type: ignore
+            warning.status_id = 2 # type: ignore
             session.commit()
             return 0
         else:
