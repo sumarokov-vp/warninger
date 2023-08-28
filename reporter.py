@@ -47,13 +47,13 @@ def process_warning(warning: Warning, session: Session) -> int:
     if notification_timeout < datetime.now():
         if next_notification < datetime.now():
             message = f"""
-    {warning.message}
-    _____________________
-    <code>
-    Warning name: {warning.name}
-    Last success signal: {warning.last_success}
-    </code>
-    """
+{warning.message}
+_____________________
+<code>
+Warning name: {warning.name}
+Last success signal: {warning.last_success}
+</code>
+"""
             warning.all_recipients_mailing(
                 session= session,
                 message= message,
