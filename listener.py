@@ -24,7 +24,6 @@ def everythingisok():
             )
             if warning:
                 warning.last_success = datetime.now() # type: ignore
-                session.commit()
                 message = {'message': f'Warning_id {warning.id} is OK'}
                 response = make_response(jsonify(message), 200)
                 if warning.status.name == 'Active warning':
@@ -36,6 +35,8 @@ Warning name: {warning.name}
 </code>
 """
                     warning.all_recipients_mailing(session, message)
+                    warning.status_id = 1 # type: ignore
+                session.commit()
             else:
                 warning_id = json['warning_id']
                 message = {'message': f'Warning_id {warning_id} is not found!'}
