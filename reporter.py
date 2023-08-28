@@ -36,10 +36,10 @@ def process_warning(warning: Warning, session: Session) -> int:
         print(f"Last notification: {warning.last_notification}")
         print(f"{warning.repeat_days=} {warning.repeat_hours=} {warning.repeat_minutes=} {warning.repeat_seconds=}")
         next_notification = warning.last_notification + timedelta( # type: ignore
-            days= warning.repeat_days, # type: ignore
-            hours= warning.repeat_hours, # type: ignore
-            minutes= warning.repeat_minutes, # type: ignore
-            seconds= warning.repeat_seconds, # type: ignore
+            days= warning.repeat_days or 0, # type: ignore
+            hours= warning.repeat_hours or 0, # type: ignore
+            minutes= warning.repeat_minutes or 0, # type: ignore
+            seconds= warning.repeat_seconds or 0, # type: ignore
         )
 
     # Notify if next notification is in the past
