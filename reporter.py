@@ -33,6 +33,8 @@ def process_warning(warning: Warning, session: Session) -> int:
     if not warning.last_notification: # type: ignore
         next_notification = warning.last_success # type: ignore
     else:
+        print(f"Last notification: {warning.last_notification}")
+        print(f"{warning.repeat_days=} {warning.repeat_hours=} {warning.repeat_minutes=} {warning.repeat_seconds=}")
         next_notification = warning.last_notification + timedelta( # type: ignore
             days= warning.repeat_days, # type: ignore
             hours= warning.repeat_hours, # type: ignore
