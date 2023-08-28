@@ -15,6 +15,7 @@ def process_warning(warning: Warning, session: Session) -> int:
 
     # Get datetime of start notify based on last_success
     print(f"\nWarning name: {warning.name}")
+    print(f"Now datetime: {datetime.now()}")
     print(f"Last success: {warning.last_success}")
 
     if not warning.last_success: # type: ignore
@@ -33,8 +34,6 @@ def process_warning(warning: Warning, session: Session) -> int:
     if not warning.last_notification: # type: ignore
         next_notification = warning.last_success # type: ignore
     else:
-        print(f"Last notification: {warning.last_notification}")
-        print(f"{warning.repeat_days=} {warning.repeat_hours=} {warning.repeat_minutes=} {warning.repeat_seconds=}")
         next_notification = warning.last_notification + timedelta( # type: ignore
             days= warning.repeat_days or 0, # type: ignore
             hours= warning.repeat_hours or 0, # type: ignore
@@ -64,13 +63,12 @@ Last success signal: {warning.last_success}
             return 0
         else:
             print(f"Last notification: {warning.last_notification}")
-            print(f"Now datetime: {datetime.now()}")
             print(f"Next_notification: {next_notification}")
             return 1
     else:
         warning.last_notification = None
         session.commit()
-        print(f"Not time for notification yet")
+        print(f"Warning status is OK")
         return 2
 
 if __name__ == "__main__":
