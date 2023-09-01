@@ -66,7 +66,7 @@ Last success signal: {warning.last_success}
             print(f"Next_notification: {next_notification}")
             return 1
     else:
-        warning.last_notification = None
+        warning.last_notification = None # type: ignore
         session.commit()
         print(f"Warning status is OK")
         return 2
