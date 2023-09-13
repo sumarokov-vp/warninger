@@ -24,3 +24,12 @@ build-backend = "poetry.core.masonry.api"
 pythonpath = [
   ".",
 ]
+
+[[tool.mypy.overrides]]
+module = [
+    "telebot",
+    "telebot.types",
+    "sqlalchemy",
+    "sqlalchemy.orm",
+]
+ignore_missing_imports = true
