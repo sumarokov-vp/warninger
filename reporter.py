@@ -84,6 +84,6 @@ if __name__ == "__main__":
                 #     continue
         sleep_time = int(get_setting("reporter_sleep_time_sec"))
         print(
-            f"Sleep for {sleep_time} seconds \n ----------------------------------------"  # noqa E501
+            f"\n\nSleep for {sleep_time} seconds \n ----------------------------------------"  # noqa E501
         )  # noqa E501
         sleep(sleep_time)
