@@ -15,7 +15,8 @@ def process_warning(warning: Warning, session: Session) -> int:
     print(f"Last success: {warning.last_success}")
 
     if not warning.last_success:  # type: ignore
-        return -1
+        warning.last_success = warning.created
+        session.commit()
     notification_timeout: datetime = warning.last_success + timedelta(  # type: ignore
         days=warning.wait_days,  # type: ignore
         hours=warning.wait_hours,  # type: ignore
