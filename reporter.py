@@ -71,9 +71,8 @@ if __name__ == "__main__":
     while True:
         with Session(engine, expire_on_commit=False) as session:
             warnings = session.scalars(
-                select(Warning)
-                .where(Warning.enabled == True)  # noqa E712
-                .where(Warning.last_success != None)  # noqa E711
+                select(Warning).where(Warning.enabled == True)  # noqa E712
+                # .where(Warning.last_success != None)  # noqa E711
             )
             for warning in warnings:
                 # try:
