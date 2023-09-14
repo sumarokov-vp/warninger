@@ -1,0 +1,7 @@
+POST http://104.248.134.56:5052/everythingisok
+
+Content-Type: application/json
+
+{
+  "warning_id": 1
+}

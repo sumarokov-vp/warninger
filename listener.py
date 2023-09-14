@@ -42,7 +42,7 @@ Warning name: {warning.name}
                 response_message = {"message": f"Warning_id {warning_id} is not found!"}
                 response = make_response(jsonify(response_message), 406)
     else:
-        response_message = {"message": "Content-Type not supported!"}
+        response_message = {"message": f"Content-Type not supported! {content_type}"}
         response = make_response(jsonify(response_message), 415)
 
     print("Current datetime:", datetime.now())
